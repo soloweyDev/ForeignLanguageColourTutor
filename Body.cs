@@ -4,25 +4,19 @@ namespace ForeignLanguageColourTutor
 {
     public class Body : IWrite
     {
-        string[] _text;
+        string _text;
 
-        public Body(string[] text)
+        public Body()
         {
-            _text = text;
         }
 
         public void Write()
         {
-            int numLine = 4;
-            foreach (string line in _text)
-            {
-                Console.SetCursorPosition(0, numLine);
-                Console.WriteLine(line);
-                ++numLine;
-            }
+            Console.SetCursorPosition(0, 4);
+            Console.WriteLine(_text);
         }
 
-        public void SetTest(string[] text)
+        public void SetText(string text)
         {
             _text = text;
         }
