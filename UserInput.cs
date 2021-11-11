@@ -24,6 +24,15 @@ namespace ForeignLanguageColourTutor
                     {
                         Exit = true;
                     }
+
+                    switch (bottom.GetText())
+                    {
+                        case "spanish":
+                            Program.gameZone = GameZone.Spanish;
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;

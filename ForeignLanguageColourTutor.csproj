@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Body.cs" />
     <Compile Include="Bottom.cs" />
+    <Compile Include="GameZone.cs" />
     <Compile Include="IWrite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

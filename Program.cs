@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ForeignLanguageColourTutor
 {
-    class Program
+    public class Program
     {
         private static readonly Dictionary<int, string> english = new Dictionary<int, string>()
         {
@@ -38,22 +38,22 @@ namespace ForeignLanguageColourTutor
             { 11, "rosa" }
         };
 
+        public static GameZone gameZone = GameZone.Help;
+
         static void Main()
         {
-            Random random = new Random();
+            UserInput userInput = new UserInput();
 
             Top top = new Top(new string[]
             {
                 "Foreign Language Colour Tutor"
             });
+
             Bottom bottom = new Bottom(new string[]
             {
                 "spanish",
                 "exit"
             });
-
-            Body body = new Body();
-            UserInput userInput = new UserInput();
 
             Console.SetWindowPosition(0, 0);
             Console.SetWindowSize(100, 30);
@@ -61,6 +61,31 @@ namespace ForeignLanguageColourTutor
             Console.CursorVisible = false;
             Console.InputEncoding = Encoding.Unicode;
 
+            while (!userInput.Exit)
+            {
+                Console.Clear();
+                switch (gameZone)
+                {
+                    case GameZone.Help:
+                        Help();
+                        gameZone = GameZone.Menu;
+                        break;
+                    case GameZone.Menu:
+                        Menu(userInput, bottom);
+                        break;
+                    case GameZone.Spanish:
+                        Translation(top, bottom);
+                        break;
+                    default:
+                        Console.WriteLine("Error gameZone.");
+                        gameZone = GameZone.Help;
+                        break;
+                }
+            }
+        }
+
+        private static void Help()
+        {
             Console.WriteLine(@"
 Wellcome to Foreign Language Colour Tutor
 
@@ -76,6 +101,13 @@ Then move the left or right keys to Exit and press the Enter key.
 
 To continue press any key");
             Console.ReadKey();
+        }
+
+        private static void Translation(Top top, Bottom bottom)
+        {
+            Random random = new Random();
+
+            Body body = new Body();
 
             int[] array = Enumerable.Range(0, 12).OrderBy(y => random.Next()).Take(8).ToArray();
             for (int i = 0; i < 8; ++i)
@@ -99,10 +131,13 @@ To continue press any key");
                 System.Threading.Thread.Sleep(2000);
             }
 
-            while (!userInput.Exit)
-            {
+            gameZone = GameZone.Menu;
+        }
+
+        private static void Menu(UserInput userInput, Bottom bottom)
+        {
+                bottom.Write();
                 userInput.WaitInput(bottom);
-            }
         }
     }
 }
