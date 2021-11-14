@@ -37,6 +37,36 @@ namespace ForeignLanguageColourTutor
             { 10, "indigo" },
             { 11, "rosa" }
         };
+        private static readonly Dictionary<int, string> german = new Dictionary<int, string>()
+        {
+            { 0, "rot" },
+            { 1, "orange" },
+            { 2, "gelb" },
+            { 3, "grün" },
+            { 4, "blau" },
+            { 5, "purpurn" },
+            { 6, "braue" },
+            { 7, "schwarz" },
+            { 8, "grau" },
+            { 9, "weis" },
+            { 10, "indigofarben" },
+            { 11, "rosa" }
+        };
+        private static readonly Dictionary<int, string> french = new Dictionary<int, string>()
+        {
+            { 0, "rouge" },
+            { 1, "orange" },
+            { 2, "jaune" },
+            { 3, "vert" },
+            { 4, "bleu" },
+            { 5, "violet" },
+            { 6, "marron" },
+            { 7, "sombre" },
+            { 8, "gris" },
+            { 9, "pâle" },
+            { 10, "indigo" },
+            { 11, "rose" }
+        };
 
         public static GameZone gameZone = GameZone.Help;
 
@@ -52,6 +82,8 @@ namespace ForeignLanguageColourTutor
             Bottom bottom = new Bottom(new string[]
             {
                 "spanish",
+                "german",
+                "french",
                 "exit"
             });
 
@@ -71,10 +103,16 @@ namespace ForeignLanguageColourTutor
                         gameZone = GameZone.Menu;
                         break;
                     case GameZone.Menu:
-                        Menu(userInput, bottom);
+                        Menu(userInput, top, bottom);
                         break;
                     case GameZone.Spanish:
-                        Translation(top, bottom);
+                        Translation(top, spanish);
+                        break;
+                    case GameZone.German:
+                        Translation(top, german);
+                        break;
+                    case GameZone.French:
+                        Translation(top, french);
                         break;
                     default:
                         Console.WriteLine("Error gameZone.");
@@ -103,11 +141,12 @@ To continue press any key");
             Console.ReadKey();
         }
 
-        private static void Translation(Top top, Bottom bottom)
+        private static void Translation(Top top, Dictionary<int, string> language)
         {
             Random random = new Random();
-
             Body body = new Body();
+            Bottom bottom = new Bottom(new string[] { gameZone.ToString() });
+            short score = 0;
 
             int[] array = Enumerable.Range(0, 12).OrderBy(y => random.Next()).Take(8).ToArray();
             for (int i = 0; i < 8; ++i)
@@ -119,25 +158,31 @@ To continue press any key");
                 body.SetText(english[index]);
                 body.Write();
                 string input = Console.ReadLine();
-                if (input == spanish[index])
+                if (input == language[index])
                 {
                     Console.WriteLine("The correct translation");
+                    score++;
                 }
                 else
                 {
                     Console.WriteLine("It was wrong. Correct translation:");
-                    Console.WriteLine(spanish[index]);
+                    Console.WriteLine(language[index]);
                 }
                 System.Threading.Thread.Sleep(2000);
             }
 
+            Console.WriteLine("You gave correct answers {0} of 8 ({1}%)", score, score / 8.0);
+            Console.WriteLine("\n\nTo continue press any key");
+            Console.ReadKey();
+
             gameZone = GameZone.Menu;
         }
 
-        private static void Menu(UserInput userInput, Bottom bottom)
+        private static void Menu(UserInput userInput, Top top, Bottom bottom)
         {
-                bottom.Write();
-                userInput.WaitInput(bottom);
+            top.Write(); 
+            bottom.Write();
+            userInput.WaitInput(bottom);
         }
     }
 }

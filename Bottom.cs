@@ -38,7 +38,11 @@ namespace ForeignLanguageColourTutor
                 linght += line.Length;
             }
 
-            int step = (99 - linght) / (_text.Length - 1);
+            int step = 0;
+            if (_text.Length != 1)
+            {
+                step = (99 - linght) / (_text.Length - 1);
+            }
             int position = 0;
             for (int i = 0; i < _text.Length; ++i)
             {

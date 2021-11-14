@@ -4,6 +4,8 @@
     {
         Help,
         Menu,
-        Spanish
+        Spanish,
+        German,
+        French
     }
 }

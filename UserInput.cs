@@ -30,6 +30,12 @@ namespace ForeignLanguageColourTutor
                         case "spanish":
                             Program.gameZone = GameZone.Spanish;
                             break;
+                        case "german":
+                            Program.gameZone = GameZone.German;
+                            break;
+                        case "french":
+                            Program.gameZone = GameZone.French;
+                            break;
                         default:
                             break;
                     }
